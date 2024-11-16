@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AbAn</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts link for Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Body styling with background and blur effect */
+    body.page1 {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      min-height: 100vh;
+      background: url('images/wallp.jpg') center/cover no-repeat; /* Relative path to wallpaper */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Create the blur effect */
+    body.page1::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: blur(10px); /* Adjust the blur strength */
+      z-index: -1;
+    }
+
+    /* Header and navigation styling */
+    header {
+      background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+      width: 100%;
+      padding: 15px 0;
+      text-align: center;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+    }
+
+    /* Button styling */
+    button {
+      background-color: #ff007f;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #ff005a;
+    }
+
+    /* Styling for the cat emoji */
+    p {
+      font-size: 100px;
+      color: white;
+    }
+  </style>
+</head>
+<body class="page1">
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="page2.html">Pssst... Read This</a>
+      <a href="page3.html">Cat Pics</a>
+      <a href="page4.html">Cat Game</a> <!-- Link to page 4 -->
+    </nav>
+  </header>
+  <p>😺</p> <!-- Centered cat emoji -->
+  <a href="page2.html">
+    <button>Click Here for cheese my rat 🧀🪤</button>
+  </a>
+</body>
+</html>

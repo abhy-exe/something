@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cat Snake Game</title>
+  <style>
+    /* Reset and General Styles (consistent with Page 1 and 2) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif; /* Consistent font */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(to right, #3407d9, #351332);
+      color: white;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background Image with Blur Effect */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("images/wallp4.jpg"); /* Replace with your image URL */
+      background-size: cover;
+      background-position: center;
+      filter: blur(8px); /* Blur effect */
+      z-index: -1; /* Keeps the content above the background */
+    }
+
+    /* Navbar (same as Page 1 & 2) */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 10px;
+      font-size: 18px;
+      padding: 10px;
+    }
+
+    nav a:hover {
+      background-color: #1f0324;
+      border-radius: 5px;
+    }
+
+    /* Game Canvas and Other Content */
+    .emoji {
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+
+    .score, .last-score {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 10px;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .last-score {
+      font-size: 20px;
+      color: #251d04;
+    }
+
+    .instructions {
+      font-size: 18px;
+      margin-top: 20px;
+      text-align: center;
+      font-style: italic;
+      color: #280215;
+    }
+
+    .instructions span {
+      font-weight: bold;
+      color: #ffcd38;
+    }
+
+    canvas {
+      border: 2px solid #ff007f;
+      background-color: #000;
+      display: block;
+      margin-top: 30px;
+    }
+
+    .control-buttons {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    button {
+      background-color: #ff007f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+      border-radius: 5px;
+      width: 150px;
+    }
+
+    button:hover {
+      background-color: #ff34b3;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      canvas {
+        width: 90%;
+        height: auto;
+      }
+      .score, .last-score, .instructions {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar (same as Page 1 & 2) -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="page2.html">Pssst Read This</a>
+      <a href="page3.html">Cat Pics</a>
+      <a href="page4.html">Cat Game</a>
+    </nav>
+  </header>
+
+  <!-- Cat Emoji Display -->
+  <div class="emoji">😺</div>
+
+  <!-- Score Display -->
+  <div class="score">Score: <span id="score">0</span></div>
+  <div class="last-score">Last Score: <span id="lastScore">0</span></div>
+
+  <!-- Game Instructions -->
+  <div class="instructions">
+    <p>Welcome to the Cat Snake Game! 🐾</p>
+    <p>Your goal is simple: guide your cute little cat 🐱 (that's you!) to eat as many 🥧 pies as you can!</p>
+    <p><span>Instructions:</span></p>
+    <ul>
+      <li>Use the arrow keys ⬆️⬇️⬅️➡️ to move your cat in any direction.</li>
+      <li>Each time your cat eats a pie, you get a point!</li>
+      <li>But beware! Avoid running into yourself or the walls 🚧!</li>
+    </ul>
+  </div>
+
+  <!-- Control Buttons -->
+  <div class="control-buttons">
+    <button id="startBtn">Start</button>
+    <button id="pauseBtn" disabled>Pause</button>
+  </div>
+
+  <!-- Game Canvas -->
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+  <script>
+    // Game Script (remains unchanged)
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const snakeSize = 20;
+    let snake = [{ x: 160, y: 160 }];
+    let food = randomFood();
+    let snakeDirection = { x: 0, y: -1 };
+    let score = 0;
+    let lastScore = localStorage.getItem('lastScore') || 0;
+    let gameInterval;
+    let gameRunning = false;
+
+    document.getElementById("lastScore").textContent = lastScore;
+
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); 
+      moveSnake();
+      if (checkCollision()) return resetGame();
+      drawSnake();
+      drawFood();
+      drawScore();
+    }
+
+    function moveSnake() {
+      const head = { x: snake[0].x + snakeDirection.x * snakeSize, y: snake[0].y + snakeDirection.y * snakeSize };
+      snake.unshift(head);
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        food = randomFood();
+      } else {
+        snake.pop();
+      }
+    }
+
+    function drawSnake() {
+      ctx.fillStyle = "pink"; 
+      snake.forEach(segment => ctx.fillRect(segment.x, segment.y, snakeSize, snakeSize));
+    }
+
+    function drawFood() {
+      ctx.fillStyle = "yellow"; 
+      ctx.fillRect(food.x, food.y, snakeSize, snakeSize);
+    }
+
+    function drawScore() {
+      document.getElementById("score").textContent = score;
+    }
+
+    function checkCollision() {
+      const head = snake[0];
+      if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) return true; 
+      for (let i = 1; i < snake.length; i++) {
+        if (head.x === snake[i].x && head.y === snake[i].y) return true;
+      }
+      return false;
+    }
+
+    function resetGame() {
+      snake = [{ x: 160, y: 160 }];
+      snakeDirection = { x: 0, y: -1 };
+      lastScore = score;
+      localStorage.setItem('lastScore', lastScore);
+      score = 0;
+      clearInterval(gameInterval);
+      gameRunning = false;
+      toggleButtons();
+      document.getElementById("lastScore").textContent = lastScore;
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (!gameRunning) return;
+      if (e.key === "ArrowUp" && snakeDirection.y === 0) snakeDirection = { x: 0, y: -1 };
+      if (e.key === "ArrowDown" && snakeDirection.y === 0) snakeDirection = { x: 0, y: 1 };
+      if (e.key === "ArrowLeft" && snakeDirection.x === 0) snakeDirection = { x: -1, y: 0 };
+      if (e.key === "ArrowRight" && snakeDirection.x === 0) snakeDirection = { x: 1, y: 0 };
+    });
+
+    function startGame() {
+      gameRunning = true;
+      gameInterval = setInterval(gameLoop, 150); 
+      toggleButtons();
+    }
+
+    function pauseGame() {
+      clearInterval(gameInterval);
+      gameRunning = false;
+      toggleButtons();
+    }
+
+    function toggleButtons() {
+      document.getElementById("startBtn").disabled = gameRunning;
+      document.getElementById("pauseBtn").disabled = !gameRunning;
+    }
+
+    document.getElementById("startBtn").addEventListener("click", startGame);
+    document.getElementById("pauseBtn").addEventListener("click", pauseGame);
+
+    function randomFood() {
+      let x = Math.floor(Math.random() * (canvas.width / snakeSize)) * snakeSize;
+      let y = Math.floor(Math.random() * (canvas.height / snakeSize)) * snakeSize;
+      return { x, y };
+    }
+  </script>
+</body>
+</html>

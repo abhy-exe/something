@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pssst... Read This</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Body styling with background and blur effect */
+    body.page2 {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      min-height: 100vh;
+      background: url('images/wallp2.jpg') center/cover no-repeat; /* Relative path to wallp2 image */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Create the blur effect */
+    body.page2::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: blur(10px); /* Adjust the blur strength */
+      z-index: -1;
+    }
+
+    /* Header and navigation styling */
+    header {
+      background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+      width: 100%;
+      padding: 15px 0;
+      text-align: center;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+    }
+
+    /* Button styling */
+    button {
+      background-color: #ff007f;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #ff005a;
+    }
+
+    /* Styling for the info text */
+    .info-text {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+      padding: 20px;
+      background-color: #e9a9eb;
+      border-radius: 10px;
+      color: rgb(44, 2, 58);
+    }
+  </style>
+</head>
+<body class="page2">
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="page2.html">Pssst... Read This</a>
+      <a href="page3.html">Cat Pics</a>
+      <a href="page4.html">Cat Game</a> <!-- Link to page 4 -->
+    </nav>
+  </header>
+
+  <h1 style="font-size: 40px; text-align: center;">Cat Domination!</h1>
+
+  <!-- Text Area after "Let's Play with Cats" -->
+  <section class="info-text">
+    <p>YOU HAVE BEEN TRAPPED MR. RAT!!! Welcome to the purrfect world of cats! YOU ARE NOW MY PRISONER, let me tell you more about this! Here, you’ll discover adorable cat pictures, fun games, and much more. Get ready to be amazed by the cuteness of these furry little creatures. 😻</p>
+    <p>Before you go ahead and play, take a moment to enjoy some of our favorite cat pictures added in the next page, make sure to watch them. Cats are not just pets—they’re family!</p>
+  </section>
+
+  <a href="page3.html">
+    <button>🧀 Click Here 🧀</button>
+  </a>
+</body>
+</html>

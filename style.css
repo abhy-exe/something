@@ -1,0 +1,171 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General body styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Navbar Styling */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 10px;
+  font-size: 18px;
+  padding: 10px;
+}
+
+nav a:hover {
+  background-color: #e040fb;
+  border-radius: 5px;
+}
+
+/* Page-specific Styles */
+.page2, .page3, .page4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  height: 100vh;
+}
+
+.page2 {
+  background: linear-gradient(135deg, #010b2b, #121111); /* Soft pink-orange gradient */
+}
+
+.page3 {
+  background: linear-gradient(135deg, #121212, #1a1a1a); /* Dark gradient */
+}
+
+.page4 {
+  background: linear-gradient(135deg, #121212, #1a1a1a); /* Dark gradient */
+}
+
+/* General Styling for Pages 2, 3, and 4 */
+h1 {
+  font-size: 36px;
+  color: #fff;
+  margin: 20px;
+}
+
+/* Button in Page 2 */
+button {
+  background-color: #e040fb;
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+button:hover {
+  background-color: #d500f9;
+}
+
+/* Canvas Styling for Page 4 (Cat Game) */
+#gameCanvas {
+  border-radius: 8px;
+  border: 2px solid #fff;
+  background: #121212;
+}
+
+#score {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  z-index: 10;
+}
+
+/* Footer Styling */
+footer {
+  position: fixed;
+  bottom: 10px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  header {
+    font-size: 18px;
+  }
+
+  nav a {
+    font-size: 16px;
+  }
+
+  button {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+}
+
+/* Game Over Message in Page 4 */
+#gameOver {
+  font-size: 40px;
+  color: red;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.page4 {
+  background: linear-gradient(135deg, #121212, #1a1a1a); /* Dark gradient */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  height: 100vh;
+}
+
+#gameCanvas {
+  border: 2px solid #fff;
+  background: #121212;
+}
+
+#score {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
